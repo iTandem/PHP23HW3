@@ -6,23 +6,31 @@
         'Australia' => ['Emu', 'Kangaroo', 'Ornithorhynchus anatinus'],
         'Antarctica' => ['Penguins', 'Balaenoptera musculus', 'Orcinus orca']
     ];
-    $firstName = [];
-    $lastName = [];
-    foreach ($animals as $continent => $animal) {
-        foreach ($animal as $name) {
-            $animalName = str_word_count($name, 1);
-            if (count($animalName) == 2) {
-                $firstName[] = $animalName [0];
-                $lastName[] = $animalName [1];
+    $firstnames = [];
+    $lastnames = [];
+    foreach ($animals as $continents => $continent) {
+        foreach ($continent as $animal) {
+            $names = explode(' ', $animal);
+            if (count($names) == 2) {
+                list($firstname, $lastname) = $names;
+                $firstnames[$firstname] = $continents;
+                $lastnames[] = $lastname;
             }
+            
         }
     }
-    
-    shuffle($firstName);
-    shuffle($lastName);
-    for ($x = 0; $x < count($firstName); $x++) {
-        echo $firstName [$x] . ' ' . $lastName [$x];
-        echo '<br/>';
+    $firstOfnames = array_keys($firstnames);
+    shuffle($firstOfnames);
+    shuffle($lastnames);
+    foreach ($firstOfnames as $firstnumber => $firstname) {
+        $continents = $firstnames[$firstname];
+        $lastname = $lastnames[$firstnumber];
+        $unrealcontinents[$continents][] = "$firstname $lastname";
     }
-    ?>
+    ksort($unrealcontinents);
+    foreach ($unrealcontinents as $continents => $animals) {
+        echo "<h2>$continents</h2>";
+        echo implode(',', $animals);
+    }
+?>
     

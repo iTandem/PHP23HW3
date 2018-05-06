@@ -16,7 +16,6 @@
                 $firstnames[$firstname] = $continents;
                 $lastnames[] = $lastname;
             }
-            
         }
     }
     $firstOfnames = array_keys($firstnames);
